@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: growi
+spec:
+  replicas: 1
+  selector:
+  template:
+    metadata:
+    spec:
+      containers:
+        - name: growi
+          image: weseek/growi
+          imagePullPolicy: IfNotPresent
+          ports:
+          - name: http
+            containerPort: 3000
+            protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /_api/v3/healthcheck?checkServices[]=mongo&checkServices[]=search
+              port: http
+            initialDelaySeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /_api/v3/healthcheck?checkServices[]=mongo&checkServices[]=search
+              port: http
+            initialDelaySeconds: 10
+          envFrom:
+          - configMapRef:
+              name: growi
+          - secretRef:
+              name: growi
+          resources:
+            requests:
+              cpu: 1
+              memory: 128Mi
+            limits:
+              cpu: 1
+              memory: 512Mi
+

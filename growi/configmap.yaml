@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: growi
+data:
+  MONGO_URI: mongodb://growi:growi@mongodb-svc:27017/growi?replicaSet=mongodb
+  ELASTICSEARCH_URI: https://elastic:elastic@elasticsearch-es-default:9200/growi
+  FILE_UPLOAD: aws
+  APP_SITE_URL: https://growi.example.com
+  SESSION_NAME: connect.growi.sid
+  MATHJAX: "1"
+  ELASTICSEARCH_VERSION: "7"
+
